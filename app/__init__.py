@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from app.extensions import db
+from app.models.book import Book
 
 def create_app():
   app = Flask(__name__)
@@ -9,6 +10,10 @@ def create_app():
 
   @app.route('/')
   def index():
-    return render_template('index.html', title='My Library')
+    books = db.session.execute(db.select(Book))
+    return render_template('index.html', title='My Library', books=books)
 
   return app
+
+
+from app import models
