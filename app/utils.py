@@ -11,8 +11,9 @@ def get_sample_data():
     info = book['volumeInfo']
   
     book = Book(
+      google_books_id=book.get('id'),
       title=info.get('title'),
-      author=info.get('authors'),
+      author=info.get('authors', []),
       imageUrl=info.get('imageLinks', {}).get('thumbnail'),
       status=None
     )

@@ -21,6 +21,7 @@ def create_app():
   @app.route('/search', methods=['GET', 'POST'])
   def search():
     form = SearchBookForm()
+    books = []
     if form.validate_on_submit():
       if form.title.data:
         books = get_sample_data()

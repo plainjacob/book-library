@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Enum
 from sqlalchemy.orm import Mapped, mapped_column
 from app.extensions import db
 
@@ -13,6 +13,7 @@ class Book(db.Model):
   __tablename__ = "books"
   
   id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+  google_books_id: Mapped[str] = mapped_column(nullable=False)
   title: Mapped[str] = mapped_column(nullable=False)
   author: Mapped[str] = mapped_column(nullable=False)
   # identifier: Mapped[int] = mapped_column()
