@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block header %}
+<h1>{{ title }}</h1>
+{% endblock %} {% block content %}
+<form method="POST" action="{{ url_for('search') }}">
+  {{ form.csrf_token }}
+  <p>
+    {{ form.title.label }}{{ form.title() }} {% for error in form.title.errors
+    %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
+{% if books %}
+<ul class="list-group">
+  {% for book in books %}
+  <li class="list-group-item">
+    <h2>{{ book.title }}</h2>
+    <p>{{ book.author }}</p>
+    {% if book.imageUrl %}
+    <img src="{{ book.imageUrl }}" />
+    {% endif %}
+    <button class="btn btn-primary">Add Book to My Library</button>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %} {% endblock %}

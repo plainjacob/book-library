@@ -15,4 +15,6 @@ class Book(db.Model):
   id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
   title: Mapped[str] = mapped_column(nullable=False)
   author: Mapped[str] = mapped_column(nullable=False)
+  # identifier: Mapped[int] = mapped_column()
+  imageUrl: Mapped[str] = mapped_column(nullable=False)
   status: Mapped[BookStatus]= mapped_column(Enum(BookStatus), nullable=True)
