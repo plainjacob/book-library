@@ -20,8 +20,31 @@
     {% if book.imageUrl %}
     <img src="{{ book.imageUrl }}" />
     {% endif %}
-    <button class="btn btn-primary">Add Book to My Library</button>
+    <button
+      class="btn btn-primary"
+      onclick="addBook('{{ book.google_books_id }}')"
+    >
+      Add Book to My Library
+    </button>
   </li>
   {% endfor %}
 </ul>
+<script>
+  function addBook(google_books_id) {
+    fetch('/api/add_book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ google_books_id: google_books_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+</script>
 {% endif %} {% endblock %}

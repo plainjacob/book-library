@@ -29,3 +29,23 @@ def search_books(query):
     books.append(book)
 
   return books
+
+def get_book_by_id(google_books_id):
+  url = f'https://www.googleapis.com/books/v1/volumes/{google_books_id}'
+  params = {
+    'key': config.GOOGLE_BOOKS_API_KEY
+  }
+  response = requests.get(url, params=params)
+
+  data = response.json()
+
+  info = data['volumeInfo']
+
+  book = Book(
+    google_books_id=data.get('id'),
+      title=info.get('title'),
+      author=f"{info.get('authors')}",
+      imageUrl=info.get('imageLinks', {}).get('thumbnail'),
+      status=None
+  )
+  return book

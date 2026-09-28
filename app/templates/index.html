@@ -1,6 +1,18 @@
 {% extends "base.html" %} {% block header %}
 <h1>{{ title }}</h1>
-{% endblock %} {% block content %}<button
+{% endblock %} {% block content %}
+<ul class="list-group">
+  {% for book in books %}
+  <li class="list-group-item">
+    <h2>{{ book.title }}</h2>
+    <p>{{ book.author }}</p>
+    {% if book.imageUrl %}
+    <img src="{{ book.imageUrl }}" />
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+<!-- <button
   type="button"
   class="btn btn-primary"
   data-bs-toggle="modal"
@@ -36,5 +48,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 {% endblock %}

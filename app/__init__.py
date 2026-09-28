@@ -13,9 +13,13 @@ def create_app():
 
   db.init_app(app)
 
+  from app.api import api_bp
+  app.register_blueprint(api_bp)
+
   @app.route('/')
   def index():
-    books = db.session.execute(db.select(Book))
+    query = db.select(Book)
+    books = db.session.scalars(query).all()
     return render_template('index.html', title='My Library', books=books)
 
   @app.route('/search', methods=['GET', 'POST'])
