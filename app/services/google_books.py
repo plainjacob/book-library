@@ -1,7 +1,6 @@
-import json
 import requests
 from app.config import config
-from app.models.book import Book
+from app.models import Author, Book
 
 def search_books(query):
   url = 'https://www.googleapis.com/books/v1/volumes'
@@ -16,13 +15,22 @@ def search_books(query):
   data = response.json()
 
   books = []
+  authors = []
   for book in data['items']:
     info = book['volumeInfo']
+
+    names: list = info.get('authors')
+    for name in names:
+      author = Author(
+        name=name
+      )
+      authors.append(author)
+
   
     book = Book(
       google_books_id=book.get('id'),
       title=info.get('title'),
-      author=info.get('authors'),
+      authors=authors,
       imageUrl=info.get('imageLinks', {}).get('thumbnail'),
       status=None
     )
@@ -41,10 +49,18 @@ def get_book_by_id(google_books_id):
 
   info = data['volumeInfo']
 
+  authors = []
+  names: list = info.get('authors')
+  for name in names:
+    author = Author(
+      name=name
+    )
+    authors.append(author)
+
   book = Book(
     google_books_id=data.get('id'),
       title=info.get('title'),
-      author=f"{info.get('authors')}",
+      authors=authors,
       imageUrl=info.get('imageLinks', {}).get('thumbnail'),
       status=None
   )

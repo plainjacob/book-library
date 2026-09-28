@@ -5,8 +5,9 @@
   {% for book in books %}
   <li class="list-group-item">
     <h2>{{ book.title }}</h2>
-    <p>{{ book.author }}</p>
-    {% if book.imageUrl %}
+    {% for author in book.authors %}
+    <p>{{ author.name }}</p>
+    {% endfor %} {% if book.imageUrl %}
     <img src="{{ book.imageUrl }}" />
     {% endif %}
   </li>
