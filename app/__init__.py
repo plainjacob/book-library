@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from app.config import config
 from app.extensions import db
-from app.models.book import Book
+from app.models import Book
 from app.forms import SearchBookForm
 from app.services.google_books import search_books
 from app.utils import get_sample_data
