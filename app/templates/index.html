@@ -10,9 +10,30 @@
     {% endfor %} {% if book.imageUrl %}
     <img src="{{ book.imageUrl }}" />
     {% endif %}
+    <button class="btn btn-primary" onclick="deleteBook('{{ book.id }}')">
+      Delete Book
+    </button>
   </li>
   {% endfor %}
 </ul>
+<script>
+  function deleteBook(id) {
+    fetch('/api/delete-book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+</script>
 <!-- <button
   type="button"
   class="btn btn-primary"
