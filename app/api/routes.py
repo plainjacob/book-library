@@ -23,4 +23,5 @@ def delete_book():
   book = db.get_or_404(Book, id)
   db.session.delete(book)
   db.session.commit()
+
   return {'message': 'Book deleted successfully'}

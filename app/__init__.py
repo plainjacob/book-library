@@ -30,10 +30,8 @@ def create_app():
       if form.title.data:
         books = get_sample_data()
         # books = search_books(form.title.data)
-        
     return render_template('search_book.html', title='Search Book', form=form, books=books)
-
+  
   return app
-
 
 from app import models

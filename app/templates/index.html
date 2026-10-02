@@ -3,7 +3,7 @@
 {% endblock %} {% block content %}
 <ul class="list-group">
   {% for book in books %}
-  <li class="list-group-item">
+  <li class="list-group-item" id="{{ book.id }}">
     <h2>{{ book.title }}</h2>
     {% for author in book.authors %}
     <p>{{ author.name }}</p>
@@ -28,6 +28,7 @@
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
+        document.getElementById(id).remove();
       })
       .catch((error) => {
         console.error(error);

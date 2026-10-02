@@ -1,4 +1,5 @@
 import requests
+from app.extensions import db
 from app.config import config
 from app.models import Author, Book
 
@@ -21,11 +22,12 @@ def search_books(query):
 
     names: list = info.get('authors')
     for name in names:
-      author = Author(
-        name=name
-      )
+      author = db.session.execute(db.select(Author).filter_by(name=name)).scalar_one_or_none()
+      if author is None:
+        author = Author(
+          name=name
+        )
       authors.append(author)
-
   
     book = Book(
       google_books_id=book.get('id'),
@@ -52,9 +54,11 @@ def get_book_by_id(google_books_id):
   authors = []
   names: list = info.get('authors')
   for name in names:
-    author = Author(
-      name=name
-    )
+    author = db.session.execute(db.select(Author).filter_by(name=name)).scalar_one_or_none()
+    if author is None:
+      author = Author(
+        name=name
+      )
     authors.append(author)
 
   book = Book(
